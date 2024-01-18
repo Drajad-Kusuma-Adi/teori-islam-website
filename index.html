@@ -1,222 +1,73 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teori Islam Website</title>
-    <link rel="stylesheet" href="./w3.css" />
-    <style>
-      #navButton:hover {
-        cursor: pointer;
-      }
-    </style>
-  </head>
-  <body>
-    <header>
-      <div class="w3-container w3-amber w3-padding">
-        <div class="w3-row">
-          <div
-            class="w3-col"
-            style="display: flex; justify-content: space-evenly"
-          >
-            <img
-              src="./materials/assets/placeholder.png"
-              alt="logo.jpg"
-              class="w3-circle"
-              width="100"
-              height="100"
-            />
-            <h1>Teori Islam Website</h1>
-          </div>
-          <div class="w3-col">
-            <img
-              src="./materials/assets/svgs/Dropdown.svg"
-              alt="dropdown.svg"
-              width="75"
-              height="75"
-              id="navButton"
-            />
-          </div>
-        </div>
-        <div class="w3-container w3-amber w3-padding" id="navbar">
-          <div class="w3-row">
-            <div class="w3-quarter w3-center">
-              <a href="#">Section A</a>
-            </div>
-            <div class="w3-quarter w3-center">
-              <a href="#">Section B</a>
-            </div>
-            <div class="w3-quarter w3-center">
-              <a href="#">Section C</a>
-            </div>
-            <div class="w3-quarter w3-center">
-              <a href="#">Section D</a>
-            </div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Title</title>
+  <link rel="stylesheet" href="./bootstrap/bootstrap.min.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#hero">p judul</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link" href="#">Beranda</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Pematerian
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Teori Arab</a></li>
+                <li><a class="dropdown-item" href="#">Teori Gujarat</a></li>
+                <li><a class="dropdown-item" href="#">Teori Persia</a></li>
+                <li><a class="dropdown-item" href="#">Teori China</a></li>
+              </ul>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">Game</a>
+            </li>
+          </ul>
+          <div class="d-flex">
+            <img src="./materials/assets/svgs/Dropdown.svg" alt="dropdown" width="50" height="50">
           </div>
         </div>
       </div>
-    </header>
-    <main>
-      <!-- Hero -->
-      <div
-        class="w3-container w3-padding w3-section"
-        id="hero"
-        style="
-          background-image: url('./materials/assets/placeholder.png');
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-        "
-      >
-        <div class="w3-center">
-          <h1>heading</h1>
-          <h4>caption</h4>
-        </div>
-      </div>
-      <!-- Materials -->
-      <div class="w3-container w3-padding w3-section" id="materials">
-        <div class="w3-row">
-          <div
-            style="display: flex; justify-content: center"
-            class="w3-col w3-half"
-          >
-            <div class="w3-margin" style="width: fit-content">
-              <a href="./materials/arab.html">
-                <div class="w3-card-4 w3-center">
-                  <header class="w3-container">
-                    <img src="" alt="Teori Arab.png" /><!--gambar teori-->
-                  </header>
-                  <div class="w3-container">
-                    <p>One sentence desc</p>
-                  </div>
-                  <footer>
-                    <h5 class="w3-orange w3-padding-16">Teori Arab</h5>
-                  </footer>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div
-            style="display: flex; justify-content: center"
-            class="w3-col w3-half"
-          >
-            <div class="w3-margin" style="width: fit-content">
-              <a href="./materials/china.html">
-                <div class="w3-card-4 w3-center">
-                  <header class="w3-container">
-                    <img src="" alt="Teori China.png" /><!--gambar teori-->
-                  </header>
-                  <div class="w3-container">
-                    <p>One sentence desc</p>
-                  </div>
-                  <footer>
-                    <h5 class="w3-orange w3-padding-16">Teori China</h5>
-                  </footer>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div
-            style="display: flex; justify-content: center"
-            class="w3-col w3-half"
-          >
-            <div class="w3-margin" style="width: fit-content">
-              <a href="./materials/gujarat.html">
-                <div class="w3-card-4 w3-center">
-                  <header class="w3-container">
-                    <img src="" alt="Teori Gujarat.png" /><!--gambar teori-->
-                  </header>
-                  <div class="w3-container">
-                    <p>One sentence desc</p>
-                  </div>
-                  <footer>
-                    <h5 class="w3-orange w3-padding-16">Teori Gujarat</h5>
-                  </footer>
-                </div>
-              </a>
-            </div>
-          </div>
-          <div
-            style="display: flex; justify-content: center"
-            class="w3-col w3-half"
-          >
-            <div class="w3-margin" style="width: fit-content">
-              <a href="./materials/persia.html">
-                <div class="w3-card-4 w3-center">
-                  <header class="w3-container">
-                    <img src="" alt="Teori Persia.png" /><!--gambar teori-->
-                  </header>
-                  <div class="w3-container">
-                    <p>One sentence desc</p>
-                  </div>
-                  <footer>
-                    <h5 class="w3-orange w3-padding-16">Teori Persia</h5>
-                  </footer>
-                </div>
-              </a>
-            </div>
-          </div>
-        </div>
-        <!-- <div class="w3-row">
+    </nav>
+  </header>
+  <main>
+    <!-- Hero Section -->
+    <section>
+      
+    </section>
+    
 
-            </div> -->
-      </div>
-      <!-- GAME SECTION -->
-      <div
-        class="w3-container w3-padding w3-section"
-        id="game"
-        style="
-          background-image: url('./materials/assets/placeholder.png');
-          background-position: center;
-          background-repeat: no-repeat;
-          background-size: cover;
-        "
-      >
-        <div class="w3-center">
-          <h1>heading</h1>
-          <h4>caption</h4>
-          <a
-            href="./game/index.html"
-            style="text-decoration: none"
-            class="w3-orange w3-padding"
-            >PLAY</a
-          >
-        </div>
-      </div>
-    </main>
-    <footer>
-      <div class="w3-container w3-black">
-        <div class="w3-col">
-          <ol>
-            <li>Defan Zain Pratama / 13</li>
-            <li>Dikan Valentino Putra Pratama / 14</li>
-            <li>Dinda Zasqia Meyla Arini / 15</li>
-            <li>Drajad Kusuma Adi / 16</li>
-            <li>Emmanuel Jason / 17</li>
-            <li>Evan Galen Prissyandi / 18</li>
-          </ol>
-        </div>
-        <div class="w3-col">
-          <a href="./references.html"
-            >Reference
-            <img
-              src="./materials/assets/svgs/Redirect.svg"
-              alt="redirect.svg"
-              width="15"
-          /></a>
-        </div>
-      </div>
-    </footer>
-    <script>
-      let navbar = document.getElementById("navbar");
-      let navButton = document.getElementById("navButton");
-      navButton.addEventListener("click", () => {
-        if (navbar.className.indexOf("w3-hide") == -1) {
-          navbar.className += " w3-hide";
-        } else {
-          navbar.className = navbar.classList.remove("w3-hide");
-        }
-      });
-    </script>
-  </body>
+    <div class="container" style=
+    "background-image: url('./materials/assets/placeholder.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;"
+    >
+    <div>
+      <h1>MENELUSURI PENGARUH GLOBAL SEJARAH ISLAM</h1>
+      <h4>
+        Benamkan dirimu dalam narasi ekspansi Islam, di mana tradisi,<br>
+        kebijaksanaan, dan pencerahan spiritual meninggalkan jejak yang tak<br>
+        terhapuskan dalam permadani sejarah manusia yang beragam.
+      </h4>
+      <a class="btn" style="background-color:#355395; color: #f9f9f9;" href="">Mulai Sekarang!</a>
+    </div>
+  </main>
+  <footer>
+
+  </footer>
+
+  <script src="./bootstrap/bootstrap.bundle.min.js"></script>
+</body>
 </html>
