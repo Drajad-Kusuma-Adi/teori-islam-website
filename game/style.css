@@ -1,3 +1,7 @@
+body {
+    overflow: hidden;
+}
+
 .map-container {
     display: flex;
     justify-content: center;
@@ -8,7 +12,7 @@
 
 #gameMap {
     background-image: url('./assets/gameMap.jpg');
-    background-position: right;
+    background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
 }
