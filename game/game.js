@@ -9,6 +9,7 @@ let gameLoop = null;
 let gameOver = false;
 let gamePaused = false;
 let score = 0;
+let money = 0;
 if (localStorage.getItem('highScore') !== null) {
     let highScore = localStorage.getItem('highScore');
 } else {
@@ -25,44 +26,73 @@ let enemy = {
 };
 let settlements = [
     {
-        name: 'Delhi',
-        x: 100,
-        y: 100
+        name: 'Sohar',
+        x: 220,
+        y: 160,
+        portX: 240,
+        portY: 100,
+        isTrade: false
     },
     {
-        name: 'Delhi',
-        x: 100,
-        y: 100
+        name: 'Aden',
+        x: 120,
+        y: 260,
+        portX: 160,
+        portY: 300,
+        isTrade: false
     },
     {
-        name: 'Delhi',
-        x: 100,
-        y: 100
+        name: 'Karachi',
+        x: 480,
+        y: 120,
+        portX: 420,
+        portY: 180,
+        isTrade: false
     },
 
     {
-        name: 'Delhi',
-        x: 100,
-        y: 100
+        name: 'Gwadar',
+        x: 360,
+        y: 60,
+        portX: 360,
+        portY: 120,
+        isTrade: false
     },
 
     {
-        name: 'Delhi',
-        x: 100,
-        y: 100
+        name: 'Surat',
+        x: 600,
+        y: 300,
+        portX: 580,
+        postY: 320,
+        isTrade: false
     },
 
     {
-        name: 'Delhi',
-        x: 100,
-        y: 100
+        name: 'Malacca',
+        x: 1000,
+        y: 400,
+        portX: 1020,
+        portY: 440,
+        isTrade: false
     },
 
     {
-        name: 'Delhi',
-        x: 100,
-        y: 100
+        name: 'Aceh',
+        x: 990,
+        y: 510,
+        portX: 980,
+        portY: 490,
+        isTrade: false
     },
+    {
+        name: 'Quanzhou',
+        x: 1150,
+        y: 110,
+        portX: 1150,
+        portY: 160,
+        isTrade: false
+    }
 ]
 
 let directionX = null;
@@ -120,7 +150,7 @@ let matrix = [
     [0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,],
@@ -217,140 +247,166 @@ let settlement = loadSprite('./assets/settlement.jpg', function () {
     let shipLeft = loadSprite('./assets/shipLeft.jpg', function () {
         let pirateLeft = loadSprite('./assets/pirateLeft.jpg', function () {
             let shipRight = loadSprite('./assets/shipRight.jpg', function () {
-                let pirateRight = loadSprite('./assets/pirateRight.jpg', function () {
-                    function drawGrid() {
-                        for (let x = 0; x <= cvs.width; x += cell) {
-                            ctx.moveTo(x, 0);
-                            ctx.lineTo(x, cvs.height);
+                let coin = loadSprite('./assets/coin.jpg', function () {
+                    let pirateRight = loadSprite('./assets/pirateRight.jpg', function () {
+                        function drawGrid() {
+                            for (let x = 0; x <= cvs.width; x += cell) {
+                                ctx.moveTo(x, 0);
+                                ctx.lineTo(x, cvs.height);
+                            }
+
+                            for (let y = 0; y <= cvs.height; y += cell) {
+                                ctx.moveTo(0, y);
+                                ctx.lineTo(cvs.width, y);
+                            }
+
+                            ctx.stroke();
                         }
 
-                        for (let y = 0; y <= cvs.height; y += cell) {
-                            ctx.moveTo(0, y);
-                            ctx.lineTo(cvs.width, y);
+                        function drawShip() {
+                            if (directionX === 'left') {
+                                currentDirection = 'left'
+                            } else if (directionX === 'right') {
+                                currentDirection = 'right'
+                            }
+
+                            if (currentDirection === 'left') {
+                                ctx.drawImage(shipLeft, player.x, player.y);
+                            } else if (currentDirection === 'right') {
+                                ctx.drawImage(shipRight, player.x, player.y);
+                            }
                         }
 
-                        ctx.stroke();
-                    }
+                        function drawPirate() {
+                            if (enemyX === 'left') {
+                                enemyDirection = 'left'
+                            } else if (enemyY === 'right') {
+                                enemyDirection = 'right'
+                            }
 
-                    function drawShip() {
-                        if (directionX === 'left') {
-                            currentDirection = 'left'
-                        } else if (directionX === 'right') {
-                            currentDirection = 'right'
+                            if (enemyDirection === 'left') {
+                                ctx.drawImage(pirateLeft, enemy.x, enemy.y);
+                            } else if (enemyDirection === 'right') {
+                                ctx.drawImage(pirateRight, enemy.x, enemy.y);
+                            }
                         }
 
-                        if (currentDirection === 'left') {
-                            ctx.drawImage(shipLeft, player.x, player.y);
-                        } else if (currentDirection === 'right') {
-                            ctx.drawImage(shipRight, player.x, player.y);
-                        }
-                    }
-
-                    function drawPirate() {
-                        if (enemyX === 'left') {
-                            enemyDirection = 'left'
-                        } else if (enemyY === 'right') {
-                            enemyDirection = 'right'
-                        }
-
-                        if (enemyDirection === 'left') {
-                            ctx.drawImage(pirateLeft, enemy.x, enemy.y);
-                        } else if (enemyDirection === 'right') {
-                            ctx.drawImage(pirateRight, enemy.x, enemy.y);
-                        }
-                    }
-
-                    function drawSettlement() {
-
-                    }
-
-                    function movePirate() {
-                        if (enemyMove === true) {
-                            enemyMove = false;
-                            let grid = new PF.Grid(matrix);
-                            let finder = new PF.AStarFinder({
-                                allowDiagonal: true
+                        function drawSettlement() {
+                            settlements.forEach((value, index) => {
+                                ctx.drawImage(settlement, value.x, value.y);
+                                ctx.font = '20px Arial'
+                                ctx.fillStyle = 'white';
+                                ctx.fillText(value.name, value.x, value.y + 75);
+                                if (value.isTrade === true) {
+                                    ctx.drawImage(coin, value.x, value.y - 40);
+                                }
                             });
+                        }
 
+                        let eventTrade = setInterval(() => {
+                            let nonTradeSettlements = settlements.filter(settlement => !settlement.isTrade);
+                            if (nonTradeSettlements.length > 0) {
+                                let settlement = nonTradeSettlements[Math.floor(Math.random() * nonTradeSettlements.length)];
+                                settlement.isTrade = true;
+                            }
+                        }, 3000);
+
+                        function showCoin() {
+                            ctx.font = '20px Arial';
+                            ctx.fillStyle = 'white';
+                            ctx.fillText('Coin: ' + money, 20, 40);
+                        }
+
+                        function movePirate() {
+                            if (enemyMove === true) {
+                                enemyMove = false;
+                                let grid = new PF.Grid(matrix);
+                                let finder = new PF.AStarFinder({
+                                    allowDiagonal: true
+                                });
+
+                                let enemyX = Math.round(enemy.x / cell);
+                                let enemyY = Math.round(enemy.y / cell);
+                                let playerX = Math.round(player.x / cell);
+                                let playerY = Math.round(player.y / cell);
+
+                                let path = finder.findPath(enemyX, enemyY, playerX, playerY, grid);
+                                path.forEach((value, index) => {
+                                    setTimeout(() => {
+                                        if ((value[0] * cell) > enemy.x) {
+                                            directionX = 'right'
+                                        } else {
+                                            directionX = 'left'
+                                        }
+                                        enemy.x = value[0] * cell;
+                                        enemy.y = value[1] * cell;
+
+                                        if (index === path.length - 1) {
+                                            enemyMove = true;
+                                        }
+                                    }, index * 100);
+                                });
+                            }
+                        }
+
+                        function pirateAttack() {
                             let enemyX = Math.round(enemy.x / cell);
                             let enemyY = Math.round(enemy.y / cell);
                             let playerX = Math.round(player.x / cell);
                             let playerY = Math.round(player.y / cell);
-
-                            let path = finder.findPath(enemyX, enemyY, playerX, playerY, grid);
-                            path.forEach((value, index) => {
-                                setTimeout(() => {
-                                    if ((value[0] * cell) > enemy.x) {
-                                        directionX = 'right'
-                                    } else {
-                                        directionX = 'left'
-                                    }
-                                    enemy.x = value[0] * cell;
-                                    enemy.y = value[1] * cell;
-
-                                    if (index === path.length - 1) {
-                                        enemyMove = true;
-                                    }
-                                }, index * 100);
-                            });
                         }
-                    }
 
-                    function pirateAttack() {
-                        let enemyX = Math.round(enemy.x / cell);
-                        let enemyY = Math.round(enemy.y / cell);
-                        let playerX = Math.round(player.x / cell);
-                        let playerY = Math.round(player.y / cell);
-                    }
+                        function draw() {
+                            ctx.clearRect(0, 0, cvs.width, cvs.height);
+                            // drawGrid();
+                            drawShip();
+                            drawPirate();
+                            drawSettlement();
+                            showCoin();
+                        }
 
-                    function draw() {
-                        ctx.clearRect(0, 0, cvs.width, cvs.height);
-                        // drawGrid();
-                        drawShip();
-                        drawPirate();
-                        drawSettlement();
-                    }
+                        function main() {
+                            pirateAttack();
+                            movePirate();
+                        }
 
-                    function main() {
-                        pirateAttack();
-                        movePirate();
-                    }
+                        function pause() {
+                            if (!gamePaused) {
+                                clearInterval(gameLoop);
+                                clearInterval(eventTrade);
+                                gamePaused = true;
+                            } else {
+                                startGame();
+                                gamePaused = false;
+                            }
+                        }
 
-                    function pause() {
-                        if (!gamePaused) {
-                            clearInterval(gameLoop);
-                            gamePaused = true;
-                        } else {
+                        function startGame() {
+                            gameLoop = setInterval(() => {
+                                main();
+                                draw();
+                            }, 10)
+                        }
+
+                        document.getElementById('startGame').addEventListener('click', () => {
                             startGame();
-                            gamePaused = false;
-                        }
-                    }
-
-                    function startGame() {
-                        gameLoop = setInterval(() => {
-                            main();
-                            draw();
-                        }, 10)
-                    }
-
-                    document.getElementById('startGame').addEventListener('click', () => {
-                        startGame();
-                        document.getElementById('startGame').style.display = 'none';
-                        document.getElementById('pauseGame').style.display = 'block';
-                        document.getElementById('resumeGame').style.display = 'none';
+                            document.getElementById('startGame').style.display = 'none';
+                            document.getElementById('pauseGame').style.display = 'block';
+                            document.getElementById('resumeGame').style.display = 'none';
+                        })
+                        document.getElementById('pauseGame').addEventListener('click', () => {
+                            pause();
+                            document.getElementById('pauseGame').style.display = 'none';
+                            document.getElementById('resumeGame').style.display = 'block';
+                        });
+                        document.getElementById('resumeGame').addEventListener('click', () => {
+                            pause();
+                            document.getElementById('pauseGame').style.display = 'block';
+                            document.getElementById('resumeGame').style.display = 'none';
+                        });
                     })
-                    document.getElementById('pauseGame').addEventListener('click', () => {
-                        pause();
-                        document.getElementById('pauseGame').style.display = 'none';
-                        document.getElementById('resumeGame').style.display = 'block';
-                    });
-                    document.getElementById('resumeGame').addEventListener('click', () => {
-                        pause();
-                        document.getElementById('pauseGame').style.display = 'block';
-                        document.getElementById('resumeGame').style.display = 'none';
-                    });
-                })
-            })
+                });
+            });
         });
     });
 });
