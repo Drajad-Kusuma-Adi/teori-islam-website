@@ -7,10 +7,18 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <h1 style="text-align: center;">Faithful Merchant</h1>
+    <p style="text-align: center;">Disclaimer: This game is purely made for entertainment not intended to convey historically accurate information. Any innacuracy in historical, geographical, and other aspects are to be expected.</p>
+    <p style="text-align: center;">NOTE: This game is currently in very early stage of development is currently just a proof of concept, further development is needed to make it better.</p>
+    <div style="display: flex; justify-content: center; align-items: center;">
+      <button style="display: block;" id="startGame">Start Game</button>
+      <button style="display: none;" id="pauseGame">Pause Game</button>
+      <button style="display: none;" id="resumeGame">Resume Game</button>
+    </div>
     <div class="map-container">
       <canvas id="gameMap"></canvas>
     </div>
-    <script src="./bower_components/pathfinding/pathfinding-browser.min.js"></script>
+    <script type="text/javascript" src="./bower_components/pathfinding/pathfinding-browser.min.js"></script>
     <script src="./game.js"></script>
   </body>
 </html>
