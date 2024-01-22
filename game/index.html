@@ -5,9 +5,28 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Faithful Merchant</title>
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../font.css">
     <link rel="shortcut icon" href="../materials/assets/logo.png" type="image/x-icon">
   </head>
   <body>
+    <header>
+      <div class="position-fixed z-3" style="width: 100vw;">
+          <div class="d-flex align-items-center justify-content-center flex-nowrap" style="background-color: #f9f9f9;">
+          <img src="../materials/assets/logo.png" alt="logo" width="100" height="100" class="rounded-circle p-2">
+          <h1 class="fs-2 fw-bold">Teori Islam Website</h1>
+          </div>
+          <div class="d-flex align-items-center justify-content-center flex-wrap p-2" style="background-color: #355395;">
+          <a class="btn btn-transparent text-decoration-underline" style="color: #f9f9f9;" href="../index.html">Beranda</a>
+          <a class="btn btn-transparent text-decoration-underline" style="color: #f9f9f9;" href="../index.html#materials">Pematerian</a>
+          <a class="btn btn-transparent text-decoration-underline" style="color: #f9f9f9;" href="../index.html#game">Game</a>
+          </div>
+      </div>
+  </header>
+  <main style="padding-top: 25vh">
     <h1 style="text-align: center;">Faithful Merchant</h1>
     <p style="text-align: center;">Disclaimer: This game is purely made for entertainment not intended to convey historically accurate information. Any innacuracy in historical, geographical, and other aspects are to be expected.</p>
     <p style="text-align: center;">NOTE: This game is currently in very early stage of development is currently just a proof of concept, further development is needed to make it better.</p>
@@ -19,6 +38,7 @@
     <div class="map-container">
       <canvas id="gameMap"></canvas>
     </div>
+  </main>
     <script type="text/javascript" src="./bower_components/pathfinding/pathfinding-browser.min.js"></script>
     <script src="./game.js"></script>
   </body>
