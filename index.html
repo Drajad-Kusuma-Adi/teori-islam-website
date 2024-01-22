@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Teori Islam Website</title>
+    <title>Faithful Merchant</title>
     <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="./font.css">
     <link rel="shortcut icon" href="./materials/assets/logo.png" type="image/x-icon">
   </head>
-  <body>
+  <body style="overflow-x: hidden;">
     <header>
       <div class="position-fixed z-3" style="width: 100vw;">
         <div class="d-flex align-items-center justify-content-center flex-nowrap" style="background-color: #f9f9f9;">
@@ -93,8 +93,8 @@
           <div class="card m-2" style="width: 13rem;">
             <img src="./materials/assets/teoriChina.png" class="card-img-top" alt="">
             <div class="card-body">
-              <h5 class="card-title"><b>Teori China</b></h5>
-              <p class="card-text">Islam dibawa oleh pedagang China yang berdagang di Nusantara.</p>
+              <h5 class="card-title"><b>Teori Cina</b></h5>
+              <p class="card-text">Islam dibawa oleh pedagang Cina yang berdagang di Nusantara.</p>
               <a href="./materials/china.html" class="btn ps-4 pe-4" style="background-color: #355395; color: #f9f9f9">Pelajari</a>
             </div>
           </div>
@@ -102,23 +102,38 @@
       </section>
       <!-- Game Section -->
       <section id="game" style="margin-top: 30vh; margin-bottom: 30vh; scroll-margin-top: 200px;">
-        <p class="text-center fs-1 fw-bold">Game</p>
-        <div class="d-flex justify-content-center align-items-center" style="width: 100vw;">
-          <div class="d-flex flex-column align-items-start bg-light" style="width: 80vw;">
-            <div class="d-flex align-items-center position-relative">
-              <img src="./game/assets/gameMap.jpg" alt="Image" class="img-fluid me-5 mb-5 border" style="max-width: 40%; position: absolute; top: 0; left: 0; right: 0; bottom: 0; height: 100%; width: auto; object-fit: cover;">
-              <div class="p-4" style="width: 60%; margin-left: 40%;">
-                <p class="fs-2 fw-bold text-center">Faithful Merchant</p>
-                <p class="fs-6 d-block d-lg-none">Kami tidak merekomendasikan game ini dimainkan karena ukuran layar perangkatmu yang terlalu kecil.</p>
-                <p class="fs-4 d-none d-lg-block">Mulailah berlayar dalam perjalanan "Faithful Merchant", sebuah game perdagangan yang menggabungkan sensasi perdagangan maritim dengan sejarah penyebaran agama Islam.</p>
-                <p class="fs-4 d-none d-lg-block">Sebagai pedagang yang berani dan giat, Kamu akan berlayar di Samudra Hindia, menemui berbagai budaya yang unik. Dalam perjalananmu, Kamu akan berinteraksi dengan berbagai tokoh sejarah di kawasan tertentu yang akan membantu kamu dalam menyebarkan agama Islam.</p>
-                <p class="fs-4 d-none d-lg-block">Dalam "Faithful Merchant", setiap keputusanmu akan memengaruhi jalannya permainan. Bisakah kamu menjadi pedagang yang sukses? Bisakah kamu berhasil menyebarkan agama islam ke seluruh Samudra Hindia? Jelajahi dan saksikan bagaimana jejakmu bisa mengubah dunia sejarah maritim dan kultural ini.</p>
+        <div class="d-none d-lg-block">
+          <p class="text-center fs-1 fw-bold">Game</p>
+          <div class="d-flex justify-content-center align-items-center" style="width: 100vw;">
+            <div class="d-flex flex-column align-items-start bg-light" style="width: 80vw;">
+              <div class="d-flex align-items-center position-relative">
+                <img src="./game/assets/gameMap.jpg" alt="Image" class="img-fluid me-5 mb-5 rounded" style="border: 4px solid #fff; max-width: 40%; position: absolute; top: 0; left: 0; right: 0; bottom: 0; height: 100%; width: auto; object-fit: cover;">
+                <div class="p-4" style="width: 60%; margin-left: 40%;">
+                  <p class="fs-2 fw-bold text-center">Faithful Merchant</p>
+                  <p class="fs-5">Mulailah berlayar dalam perjalanan "Faithful Merchant", sebuah game perdagangan yang menggabungkan sensasi perdagangan maritim dengan sejarah penyebaran agama Islam.</p>
+                  <p class="fs-5">Sebagai pedagang yang berani dan giat, Kamu akan berlayar di Samudra Hindia, menemui berbagai budaya yang unik. Dalam perjalananmu, Kamu akan berinteraksi dengan berbagai tokoh sejarah di kawasan tertentu yang akan membantu kamu dalam menyebarkan agama Islam.</p>
+                  <p class="fs-5">Dalam "Faithful Merchant", setiap keputusanmu akan memengaruhi jalannya permainan. Bisakah kamu menjadi pedagang yang sukses? Bisakah kamu berhasil menyebarkan agama islam ke seluruh Samudra Hindia? Jelajahi dan saksikan bagaimana jejakmu bisa mengubah dunia sejarah maritim dan kultural ini.</p>
+                </div>
               </div>
+              <button type="button" class="w-100 btn py-3" style="background-color: #355395; color: #f9f9f9">
+                <a href="./game/" class="fs-2 fw-bold text-decoration-none text-light">Mainkan</a>
+              </button>
             </div>
-            <button type="button" class="w-100 btn py-3 d-lg-none disabled" style="background-color: #355395; color: #f9f9f9">
-              <a href="./game/" class="fs-2 fw-bold">Mainkan</a>
-            </button>
-            <button type="button" class="w-100 btn py-3 d-none d-lg-block" style="background-color: #355395; color: #f9f9f9">
+          </div>
+        </div>
+        <div class="d-lg-none">
+          <p class="text-center fs-1 fw-bold">Game</p>
+          <div class="d-flex justify-content-center align-items-center flex-column border mx-3">
+            <img src="./game/assets/gameMap.jpg" alt="Image" class="img-fluid rounded">
+            <div class="p-4 w-100">
+              <p class="fs-2 fw-bold text-center">Faithful Merchant</p>
+              <p class="fs-5">Mulailah berlayar dalam perjalanan "Faithful Merchant", sebuah game perdagangan yang menggabungkan sensasi perdagangan maritim dengan sejarah penyebaran agama Islam.</p>
+              <p class="fs-5">Sebagai pedagang yang berani dan giat, Kamu akan berlayar di Samudra Hindia, menemui berbagai budaya yang unik. Dalam perjalananmu, Kamu akan berinteraksi dengan berbagai tokoh sejarah di kawasan tertentu yang akan membantu kamu dalam menyebarkan agama Islam.</p>
+              <p class="fs-5">Dalam "Faithful Merchant", setiap keputusanmu akan memengaruhi jalannya permainan. Bisakah kamu menjadi pedagang yang sukses? Bisakah kamu berhasil menyebarkan agama islam ke seluruh Samudra Hindia? Jelajahi dan saksikan bagaimana jejakmu bisa mengubah dunia sejarah maritim dan kultural ini.</p>
+              <br>
+              <p class="text-center fs-6">Kami tidak merekomendasikan game ini dimainkan karena ukuran layar perangkatmu yang terlalu kecil.</p>
+            </div>
+            <button type="button" class="w-100 btn py-3" style="background-color: #355395; color: #f9f9f9">
               <a href="./game/" class="fs-2 fw-bold text-decoration-none text-light">Mainkan</a>
             </button>
           </div>
