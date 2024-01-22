@@ -76,6 +76,10 @@ quiz.addEventListener('click', function (event) {
             answerCorrection = null;
             quizStatus = false;
         }
+        for (let i = 1; i < 5; i++) {
+            const answer = document.getElementById('question' + (questionNumber + 1) + 'Answer' + i);
+            answer.classList.add('disabled');
+        }
         nextQuestion.classList.remove('d-none');
     }
 });
