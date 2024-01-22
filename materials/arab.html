@@ -4,10 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Teori Arab</title>
-    <link rel="stylesheet" href="./bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../font.css">
     <link rel="shortcut icon" href="./assets/logo.png" type="image/x-icon">
@@ -52,7 +51,7 @@
         Pada zaman dahulu, masuknya Islam ke Nusantara telah menjadi topik yang diperdebatkan oleh para sejarawan. Salah satu pandangan yang diperjuangkan oleh beberapa tokoh terkenal seperti Buya Hamka dan van Leur adalah Teori Arab. Menurut Teori Arab, agama Islam tiba di Nusantara pada abad ke-7 melalui perantau dari Arab yang dengan tekad bulat berusaha menyebarkan ajaran Islam secara global. Pandangan ini didukung oleh beberapa bukti yang cukup menarik. Salah satunya adalah keberadaan perkampungan Arab di Barus, Sumatera Utara, yang dikenal sebagai Bandar Khalifah. Perkampungan ini menjadi tempat tinggal bagi para perantau Arab yang memainkan peran penting dalam penyebaran Islam di wilayah Nusantara.<br><br>
         Seiring berjalannya waktu, Islam semakin mengakar di Nusantara dan mazhab Syafi'i menjadi dominan di daerah Samudera Pasai. Mazhab ini juga populer di negara-negara Arab dan Mesir pada masa itu. Fakta ini menunjukkan adanya keterkaitan budaya dan pengaruh Islam antara Nusantara dan dunia Arab pada saat itu. Selain itu, penggunaan gelar Al-Malik oleh raja-raja Samudera Pasai juga mencerminkan pengaruh budaya Islam yang kuat, mirip dengan praktik yang ada di Mesir.<br><br>
         Namun, meskipun Teori Arab memiliki sejumlah bukti yang mendukungnya, pandangan ini juga mendapat kritik dari beberapa pihak. Salah satu kritik yang sering diajukan adalah kurangnya sumber tertulis yang memadai untuk menjelaskan peran bangsa Arab dalam penyebaran Islam di Indonesia. Beberapa sejarawan berpendapat bahwa sumber-sumber tersebut masih terbatas dan tidak memberikan gambaran yang komprehensif tentang peran Arab dalam proses pengislaman di Nusantara.<br><br>
-        </main>
+      </main>
       <footer>
         <table>
           <tr>
@@ -66,23 +65,23 @@
           </tr>
         </table>
       </footer>
-      <section>
+      <section class="border rounded p-2">
         <hr>
-        <!-- quiz here -->
+        <p class="text-center fs-2 fw-bold">Quiz</p>
+        <div id="quiz" class="text-center"></div>
+        <div class="text-center m-2">
+            <hr>
+            <p class="fs-4 d-none" id="correctAnswer">Jawaban Benar!</p>
+            <p class="fs-4 d-none" id="wrongAnswer">Jawaban Salah!</p>
+            <p class="fs-4 d-none text-decoration-underline" id="correction"></p>
+            <button class="btn btn-warning d-none" id="nextQuestion">Pertanyaan Selanjutnya</button>
+            <p class="fs-2 fw-bold d-none" id="quizDone">Quiz Selesai!</p>
+            <p class="fs-3 fw-bold d-none" id="score"></p>
+        </div>
       </section>
     </div>
     <script src="../bootstrap/bootstrap.bundle.min.js"></script>
-    <script>
-        const questions = [
-            {
-                question: 'test1',
-                answerA: 'answera',
-                answerB: 'answerb',
-                answerC: 'answerc',
-                answerD: 'answerd',
-                correctAnswer: 'a'
-            }
-        ]
-    </script>
+    <script src="./quizzes/arab.js"></script>
+    <script src="./quizzes/quiz.js"></script>
   </body>
 </html>
