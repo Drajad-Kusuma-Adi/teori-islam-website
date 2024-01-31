@@ -1,6 +1,5 @@
 let cvs = document.getElementById('gameMap');
 let ctx = cvs.getContext('2d');
-
 cvs.width = 1280;
 cvs.height = 720;
 const cell = 10;
@@ -11,21 +10,12 @@ let gameOver = false;
 let gamePaused = false;
 let score = 0;
 let money = 0;
-if (localStorage.getItem('highScore') !== null) {
-    let highScore = localStorage.getItem('highScore');
-} else {
-    let highScore = 0;
+if (!localStorage.getItem('highScore')) {
+    localStorage.setItem('highScore', 0);
 }
+let highScore = localStorage.getItem('highScore');
 
-let player = {
-    x: 500,
-    y: 500,
-};
-let enemy = {
-    x: 100,
-    y: 600,
-};
-let settlements = [
+const settlements = [
     {
         name: 'Sohar',
         x: 220,
@@ -38,8 +28,8 @@ let settlements = [
         name: 'Aden',
         x: 120,
         y: 260,
-        portX: 160,
-        portY: 300,
+        portX: 180,
+        portY: 320,
         isTrade: false
     },
     {
@@ -64,8 +54,8 @@ let settlements = [
         name: 'Surat',
         x: 600,
         y: 300,
-        portX: 580,
-        postY: 320,
+        portX: 540,
+        portY: 320,
         isTrade: false
     },
 
@@ -73,7 +63,7 @@ let settlements = [
         name: 'Malacca',
         x: 1000,
         y: 400,
-        portX: 1020,
+        portX: 1040,
         portY: 440,
         isTrade: false
     },
@@ -83,20 +73,38 @@ let settlements = [
         x: 990,
         y: 510,
         portX: 980,
-        portY: 490,
+        portY: 560,
         isTrade: false
     },
     {
         name: 'Quanzhou',
         x: 1150,
         y: 110,
-        portX: 1150,
-        portY: 160,
+        portX: 1200,
+        portY: 200,
         isTrade: false
     }
 ];
-const vicinity = 25;
+let player = {
+    x: null,
+    y: null,
+};
+let enemy = {
+    x: null,
+    y: null,
+};
+let randomIndex = Math.floor(Math.random() * settlements.length);
+let randomSettlement = settlements[randomIndex];
 
+player.x = randomSettlement.portX;
+player.y = randomSettlement.portY;
+
+let enemyIndex = (randomIndex + 1) % settlements.length;
+let enemySettlement = settlements[enemyIndex];
+
+enemy.x = enemySettlement.portX;
+enemy.y = enemySettlement.portY;
+// TODO: randomize player and enemy location based on one random settlement
 let directionX = null;
 let directionY = null;
 let currentDirection = 'right';
@@ -104,8 +112,11 @@ let enemyX = null;
 let enemyY = null;
 let enemyDirection = 'right';
 
+let opportunities = 0;
+let income = 0;
+
 // 128 X 72 Matrix
-let matrix = [
+const matrix = [
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0,],
@@ -183,37 +194,6 @@ let matrix = [
 let playerMove = true;
 let enemyMove = true;
 
-document.addEventListener('click', function (event) {
-    // event.preventDefault();
-    if (playerMove === false) {
-        let grid = new PF.Grid(matrix);
-        let finder = new PF.AStarFinder({
-            allowDiagonal: true
-        });
-
-        let playerX = Math.round(player.x / cell);
-        let playerY = Math.round(player.y / cell);
-        let rect = cvs.getBoundingClientRect();
-        let targetX = Math.round((event.clientX - rect.left) / cell);
-        let targetY = Math.round((event.clientY - rect.top) / cell);
-
-        let path = finder.findPath(playerX, playerY, targetX, targetY, grid);
-        path.forEach(function (value, index) {
-            setTimeout(function () {
-                if ((value[0] * cell) > player.x) {
-                    directionX = 'right'
-                } else {
-                    directionX = 'left'
-                }
-                player.x = value[0] * cell;
-                player.y = value[1] * cell;
-                playerMove = true;
-            }, index * 50);
-        });
-    }
-    playerMove = false;
-});
-
 function loadSprite(src, callback) {
     let sprite = new Image();
     sprite.src = src;
@@ -227,19 +207,82 @@ let settlement = loadSprite('./assets/settlement.jpg', function () {
             let shipRight = loadSprite('./assets/shipRight.jpg', function () {
                 let coin = loadSprite('./assets/coin.jpg', function () {
                     let pirateRight = loadSprite('./assets/pirateRight.jpg', function () {
-                        function drawGrid() {
-                            for (let x = 0; x <= cvs.width; x += cell) {
-                                ctx.moveTo(x, 0);
-                                ctx.lineTo(x, cvs.height);
+                        document.addEventListener('click', function (event) {
+                            if (playerMove === false) {
+                                let grid = new PF.Grid(matrix);
+                                let finder = new PF.AStarFinder({
+                                    allowDiagonal: true
+                                });
+                                let playerX = Math.round(player.x / cell);
+                                let playerY = Math.round(player.y / cell);
+                                let rect = cvs.getBoundingClientRect();
+                                let targetX = Math.round((event.clientX - rect.left) / cell);
+                                let targetY = Math.round((event.clientY - rect.top) / cell);
+                                let path = finder.findPath(playerX, playerY, targetX, targetY, grid);
+                                path.forEach(function (value, index) {
+                                    setTimeout(function () {
+                                        if ((value[0] * cell) > player.x) {
+                                            directionX = 'right'
+                                        } else {
+                                            directionX = 'left'
+                                        }
+                                        player.x = value[0] * cell;
+                                        player.y = value[1] * cell;
+                                        playerMove = true;
+                                    }, index * 50);
+                                });
                             }
+                            playerMove = false;
+                        });
 
-                            for (let y = 0; y <= cvs.height; y += cell) {
-                                ctx.moveTo(0, y);
-                                ctx.lineTo(cvs.width, y);
+                        document.addEventListener('keydown', function (event) {
+                            if (event.key === ' ') {
+                                if (playerMove === false) {
+                                    let comparison = [];
+                                    settlements.forEach(function (value) {
+                                        this.distanceX = null;
+                                        this.distanceY = null;
+                                        if (player.x >= value.x) {
+                                            this.distanceX = player.x - value.x
+                                        } else if (player.x <= value.x) {
+                                            this.distanceX = value.x - player.x
+                                        }
+                                        if (player.y >= value.y) {
+                                            this.distanceY = player.y - value.y
+                                        } else if (player.y <= value.y) {
+                                            this.distanceY = value.y - player.y
+                                        }
+                                        comparison.push({ portX: value.portX, portY: value.portY, distanceX: this.distanceX, distanceY: this.distanceY });
+                                    });
+                                    comparison.sort(function (a, b) {
+                                        return (a.distanceX + a.distanceY) - (b.distanceX + b.distanceY);
+                                    });
+                                    let lowestDistance = comparison[0];
+                                    let grid = new PF.Grid(matrix);
+                                    let finder = new PF.AStarFinder({
+                                        allowDiagonal: true
+                                    });
+                                    let playerX = Math.round(player.x / cell);
+                                    let playerY = Math.round(player.y / cell);
+                                    let targetX = Math.round(lowestDistance.portX / cell);
+                                    let targetY = Math.round(lowestDistance.portY / cell);
+                                    let path = finder.findPath(playerX, playerY, targetX, targetY, grid);
+                                    path.forEach(function (value, index) {
+                                        setTimeout(function () {
+                                            if ((value[0] * cell) > player.x) {
+                                                directionX = 'right'
+                                            } else {
+                                                directionX = 'left'
+                                            }
+                                            player.x = value[0] * cell;
+                                            player.y = value[1] * cell;
+                                            playerMove = true;
+                                        }, index * 50);
+                                    });
+                                }
+                                playerMove = false;
                             }
-
-                            ctx.stroke();
-                        }
+                        });
 
                         function drawShip() {
                             if (directionX === 'left') {
@@ -282,9 +325,14 @@ let settlement = loadSprite('./assets/settlement.jpg', function () {
                         }
 
                         function showCoin() {
+                            ctx.drawImage(coin, 10, 10);
                             ctx.font = '20px Arial';
                             ctx.fillStyle = 'white';
-                            ctx.fillText('Coin: ' + money, 20, 40);
+                            if (income > 0) {
+                                ctx.fillText('Coin: ' + money + ' +(' + income + ')', 66, 44);
+                            } else {
+                                ctx.fillText('Coin: ' + money, 66, 44);
+                            }
                         }
 
                         function movePirate() {
@@ -324,27 +372,58 @@ let settlement = loadSprite('./assets/settlement.jpg', function () {
                             let enemyY = Math.round(enemy.y / cell);
                             let playerX = Math.round(player.x / cell);
                             let playerY = Math.round(player.y / cell);
+                            if (playerX === enemyX && playerY === enemyY) {
+                                clearInterval(gameLoop);
+                                clearInterval(eventTrade);
+                                document.getElementById('bgMusic').pause();
+                                ctx.font = '40px Arial';
+                                ctx.fillStyle = 'white';
+                                ctx.fillText('GAME OVER', cvs.width / 2.4, cvs.height / 2 + 100);
+                                ctx.font = '30px Arial';
+                                ctx.fillStyle = 'white';
+                                ctx.fillText('You have been attacked by pirates', cvs.width / 3, cvs.height / 2 + 130);
+                                document.getElementById('pauseGame').style.display = 'none';
+                                document.getElementById('resumeGame').style.display = 'none';
+                                document.getElementById('tryAgain').style.display = 'block';
+                                document.getElementById('pirateSfx').play();
+                            }
                         }
 
-                        function checkTrade() {
+                        function tradeEvent() {
+                            opportunities = 0;
                             settlements.forEach(function (value) {
-                                let playerX = Math.round(player.x / cell);
-                                let playerY = Math.round(player.y / cell);
-                                let portX = Math.round(value.portX / cell);
-                                let portY = Math.round(value.portY / cell);
-
-                                let distance = Math.sqrt(Math.pow(playerX - portX, 2) + Math.pow(playerY - portY, 2));
-                                if (distance <= vicinity) {
-                                    console.log('Player is near the port!');
+                                if (value.isTrade === true) {
+                                    opportunities++;
                                 }
-                                console.log(distance);
-                                console.log(vicinity);
+                            })
+                            settlements.forEach(function (settlement) {
+                                if (settlement.isTrade && player.x === settlement.portX && player.y === settlement.portY) {
+                                    if (opportunities === 1) {
+                                        income = Math.round(Math.random() * (400 - 300) + 300);
+                                    } else if (opportunities === 2) {
+                                        income = Math.round(Math.random() * (300 - 200) + 200);
+                                    } else if (opportunities === 3) {
+                                        income = Math.round(Math.random() * (200 - 100) + 100);
+                                    } else if (opportunities >= 4) {
+                                        income = Math.round(Math.random() * (100 - 50) + 50);
+                                    }
+                                    money += income;
+                                    settlement.isTrade = false;
+                                    document.getElementById('tradeSfx').play();
+                                }
                             });
                         }
 
+                        function updateScore() {
+                            console.log(money);
+                            console.log(highScore);
+                            if (money > highScore) {
+                                highScore = money;
+                                localStorage.setItem('highScore', highScore);
+                            }
+                        }
+
                         function draw() {
-                            ctx.clearRect(0, 0, cvs.width, cvs.height);
-                            // drawGrid();
                             drawShip();
                             drawPirate();
                             drawSettlement();
@@ -354,7 +433,8 @@ let settlement = loadSprite('./assets/settlement.jpg', function () {
                         function main() {
                             pirateAttack();
                             movePirate();
-                            checkTrade();
+                            tradeEvent();
+                            updateScore();
                         }
 
                         function pause() {
@@ -370,23 +450,32 @@ let settlement = loadSprite('./assets/settlement.jpg', function () {
 
                         function startGame() {
                             gameLoop = setInterval(function () {
+                                ctx.clearRect(0, 0, cvs.width, cvs.height);
                                 main();
                                 draw();
                             }, 10)
                             eventTrade = setInterval(function () {
+                                let tradeSettlements = settlements.filter(settlement => settlement.isTrade);
                                 let nonTradeSettlements = settlements.filter(settlement => !settlement.isTrade);
                                 if (nonTradeSettlements.length > 0) {
                                     let settlement = nonTradeSettlements[Math.floor(Math.random() * nonTradeSettlements.length)];
                                     settlement.isTrade = true;
                                 }
-                            }, 3000);
+                                if (tradeSettlements.length > 4) {
+                                    tradeSettlements[0].isTrade = false;
+                                }
+                            }, Math.floor(Math.random() * (5000 - 3000 + 1)) + 3000);
                         }
 
                         document.getElementById('startGame').addEventListener('click', function () {
                             startGame();
+                            document.getElementById('bgMusic').play();
                             document.getElementById('startGame').style.display = 'none';
                             document.getElementById('pauseGame').style.display = 'block';
                             document.getElementById('resumeGame').style.display = 'none';
+                            document.getElementById('tutorialBtn').style.display = 'none';
+                            document.getElementById('mapContainer').style.display = 'flex';
+                            document.getElementById('highScore').style.display = 'none';
                         })
                         document.getElementById('pauseGame').addEventListener('click', function () {
                             pause();
@@ -398,6 +487,9 @@ let settlement = loadSprite('./assets/settlement.jpg', function () {
                             document.getElementById('pauseGame').style.display = 'block';
                             document.getElementById('resumeGame').style.display = 'none';
                         });
+                        document.getElementById('tryAgain').addEventListener('click', function () {
+                            location.reload();
+                        })
                     });
                 });
             });

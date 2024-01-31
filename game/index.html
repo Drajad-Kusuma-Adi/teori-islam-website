@@ -4,42 +4,86 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Faithful Merchant</title>
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css" />
+    <link rel="stylesheet" href="../bootstrap/bootstrap.min.css">
+    <link rel="stylesheet" href="./style.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu+Condensed&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../font.css">
     <link rel="shortcut icon" href="../materials/assets/logo.png" type="image/x-icon">
   </head>
-  <body>
+  <body class="bg-color">
     <header>
-      <div class="position-fixed z-3" style="width: 100vw;">
-          <div class="d-flex align-items-center justify-content-center flex-nowrap" style="background-color: #f9f9f9;">
-          <img src="../materials/assets/logo.png" alt="logo" width="100" height="100" class="rounded-circle p-2">
-          <h1 class="fs-2 fw-bold">Teori Islam Website</h1>
-          </div>
-          <div class="d-flex align-items-center justify-content-center flex-wrap p-2" style="background-color: #355395;">
-          <a class="btn btn-transparent text-decoration-underline" style="color: #f9f9f9;" href="../index.html">Beranda</a>
-          <a class="btn btn-transparent text-decoration-underline" style="color: #f9f9f9;" href="../index.html#materials">Pematerian</a>
-          <a class="btn btn-transparent text-decoration-underline" style="color: #f9f9f9;" href="../index.html#game">Game</a>
+      <div class="position-relative z-3" style="width: 100vw;">
+          <div class="d-flex align-items-center justify-content-center flex-wrap p-2" style="background-color: brown;">
+          <a class="btn btn-transparent" style="color: #f9f9f9;" href="../index.html">Beranda</a>
+          <a class="btn btn-transparent" style="color: #f9f9f9;" href="../index.html#materials">Pematerian</a>
+          <a class="btn btn-transparent" style="color: #f9f9f9;" href="../index.html#game">Game</a>
           </div>
       </div>
   </header>
-  <main style="padding-top: 25vh">
-    <h1 style="text-align: center;">Faithful Merchant</h1>
-    <p style="text-align: center;">Disclaimer: This game is purely made for entertainment not intended to convey historically accurate information. Any innacuracy in historical, geographical, and other aspects are to be expected.</p>
-    <p style="text-align: center;">NOTE: This game is currently in very early stage of development is currently just a proof of concept, further development is needed to make it better.</p>
-    <div style="display: flex; justify-content: center; align-items: center;">
-      <button style="display: block;" id="startGame">Start Game</button>
-      <button style="display: none;" id="pauseGame">Pause Game</button>
-      <button style="display: none;" id="resumeGame">Resume Game</button>
+  <main style="padding-top: 20px; display: flex; justify-content: center; align-items: center; flex-direction: column;">
+    <div class="map-container" id="mapContainer" style="display: flex; justify-content: center; align-items: center;">
+      <div>
+        <canvas id="gameMap"></canvas>
+      </div>
+      <div style="display: flex; justify-content: center; align-items: center; flex-direction: column; margin-left: 20px;">
+        <!-- <img src="" alt="faithful merchant title" style="margin: 20px;" id="title"> -->
+        <h1>Faithful Merchant</h1>
+        <p id="highScore"></p>
+        <button class="interface" style="display: block;" id="startGame">Start Game</button>
+        <!-- Button trigger modal -->
+        <button type="button" id="tutorialBtn" class="interface" data-bs-toggle="modal" data-bs-target="#tutorial">
+          Tutorial
+        </button>
+        <div class="modal fade" id="tutorial" tabindex="-1" aria-labelledby="tutorialLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">Tutorial</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <h4>Controls</h4>
+                It's really simple, just two buttons to play!
+                <ul>
+                  <li>LMB (2x): Move ship to cursor</li>
+                  <li>Spacebar (2x): Anchor ship to nearby settlement</li>
+                </ul>
+                <h4>Tutorial</h4>
+                  <p>You are the captain of a merchantman-class ship. Your task is to trade with various coastal settlements across the Indian Ocean. But your journey wouldn't be easy, a band of pirates are constantly chasing you all across the horizon.</p>
+                  <p>Click around the map to set sail. If a settlement is open to trade, a coin would appear above them. You can press spacebar twice to anchor and trade with the nearest settlement.</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Back to Game</button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <button class="interface" style="display: none;" id="pauseGame">Pause Game</button>
+        <button class="interface" style="display: none;" id="resumeGame">Resume Game</button>
+        <button class="interface" style="display: none;" id="tryAgain">Try Again?</button>
+      </div>
     </div>
-    <div class="map-container">
-      <canvas id="gameMap"></canvas>
-    </div>
+    <audio loop id="bgMusic">
+      <source src="./assets/sea-and-seagull-wave-5932.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="tradeSfx">
+      <source src="./assets/collect-ring-15982.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="pirateSfx">
+      <source src="./assets/sword-slash-and-swing-185432.mp3" type="audio/mpeg">
+    </audio>
   </main>
+    <script src="../bootstrap/bootstrap.bundle.min.js"></script>
     <script type="text/javascript" src="./bower_components/pathfinding/pathfinding-browser.min.js"></script>
+    <script>
+      if (localStorage.getItem('highScore')) {
+        document.querySelector('#highScore').innerHTML = 'High score: ' + localStorage.getItem('highScore');
+      } else {
+        document.querySelector('#highScore').innerHTML = 'High score: 0';
+      }
+    </script>
     <script src="./game.js"></script>
   </body>
 </html>

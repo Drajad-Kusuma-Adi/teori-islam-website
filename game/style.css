@@ -1,13 +1,32 @@
+* {
+    font-size: large;
+}
+
 body {
-    overflow: scroll;
+    overflow: hidden;
+}
+
+.bg-color {
+    background-image: url(./assets/mainMenu.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-color: brown;
+}
+
+.interface {
+    padding: 5px; padding-left: 10px; padding-right: 10px; background-color: brown; color: white; width: 150px;
+}
+
+.interface:hover {
+    cursor: pointer;
 }
 
 .map-container {
-    display: flex;
+    display: none;
     justify-content: center;
     align-items: center;
-    width: 100vw;
-    height: 100vh;
+    margin-bottom: 10vh;
 }
 
 #gameMap {
